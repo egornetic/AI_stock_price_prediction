@@ -104,14 +104,11 @@ def prepare_ticker_data(ticker, window_size):
     df.columns = df.columns.get_level_values(0)
     df = df[['Close']].dropna()
 
-    # обработка выбросов
     df['Close'] = remove_outliers_iqr(df['Close'])
 
-    # масштабирование
     scaler = MinMaxScaler()
     scaled = scaler.fit_transform(df)
 
-    # временные окна
     X, y = [], []
     for i in range(window_size, len(scaled)):
         X.append(scaled[i - window_size:i, 0])
