@@ -143,10 +143,33 @@ for t in TICKERS:
 X_all = np.vstack(X_all)
 y_all = np.concatenate(y_all)
 
+
+
+
 split = int(0.8 * len(X_all))
 X_train, X_test = X_all[:split], X_all[split:]
 y_train, y_test = y_all[:split], y_all[split:]
 
+
+
+num_tickers = len(TICKERS)
+num_samples = X_all.shape[0]
+window_size = X_all.shape[1]
+num_features = X_all.shape[2]
+
+train_size = X_train.shape[0] if 'X_train' in globals() else int(0.8 * num_samples)
+test_size = num_samples - train_size
+
+print("\n========== DATA VOLUME ==========")
+print(f"Количество акций (tickers): {num_tickers}")
+print(f"Общее количество последовательностей: {num_samples}")
+print(f"Длина временного окна (дней): {window_size}")
+print(f"Количество признаков: {num_features}")
+print(f"Обучающая выборка (80%): {train_size}")
+print(f"Тестовая выборка (20%): {test_size}")
+print(f"Формат входных данных X: {X_all.shape}")
+print(f"Формат выходных данных y: {y_all.shape}")
+print("=================================\n")
 
 
 model = Sequential([
